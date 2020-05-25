@@ -1,13 +1,19 @@
 const path = require('path');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
-    entry: { 
+    entry: {
         server: './src/server.ts' 
     },
 
     plugins: [
-        new CleanWebpackPlugin()
+        new CleanWebpackPlugin(),
+        new HtmlWebpackPlugin({
+            title: 'Hello, Client!',
+            filename: 'static/index.html',
+            chunks: [] // just create a placeholder index.html for now
+        }),
     ],
 
     module: {
