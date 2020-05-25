@@ -6,7 +6,9 @@
 
 Development
 ---
-\# TODO how to build and run locally
+**build:** `npm run build`
+
+**start:** `npm start`
 
 \# TODO how to test
 
