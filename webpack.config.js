@@ -1,21 +1,11 @@
 const path = require('path');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const merge = require('webpack-merge');
 
-module.exports = {
-    entry: {
-        server: './src/server.ts' 
-    },
+// TODO figure out better CleanWebpackPlugin configuration
 
-    plugins: [
-        new CleanWebpackPlugin(),
-        new HtmlWebpackPlugin({
-            title: 'Hello, Client!',
-            filename: 'static/index.html',
-            chunks: [] // just create a placeholder index.html for now
-        }),
-    ],
-
+const baseConfig = {
     module: {
         rules: [
             {
@@ -34,10 +24,50 @@ module.exports = {
         ]
     },
 
-    target: 'node',
-
     output: {
-        filename: '[name].bundle.js',
-        path: path.resolve(__dirname, 'dist'),
+        filename: '[name].bundle.js'
     }
 };
+
+const clientConfig = merge(baseConfig, {
+    entry: {
+        client: './src/client.ts' 
+    },
+
+    plugins: [
+        new CleanWebpackPlugin({
+            cleanOnceBeforeBuildPatterns: []
+        }),
+        new HtmlWebpackPlugin({
+            title: 'Hello, Client!',
+            filename: 'index.html',
+            chunks: ['client']
+        }),
+    ],
+
+    output: {
+        path: path.resolve(__dirname, 'dist', 'static'),
+    },
+
+    target: 'web'
+});
+
+const serverConfig = merge(baseConfig, {
+    entry: {
+        server: './src/server.ts' 
+    },
+
+    plugins: [
+        new CleanWebpackPlugin({
+            cleanOnceBeforeBuildPatterns: []
+        }),
+    ],
+
+    output: {
+        path: path.resolve(__dirname, 'dist'),
+    },
+
+    target: 'node',
+});
+
+module.exports = [serverConfig, clientConfig];
