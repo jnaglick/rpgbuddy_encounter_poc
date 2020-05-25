@@ -3,7 +3,7 @@ const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 
 module.exports = {
     entry: { 
-        server: './src/server.js' 
+        server: './src/server.ts' 
     },
 
     plugins: [
@@ -23,6 +23,7 @@ module.exports = {
     resolve: {
         extensions: [".ts", ".js"],
         modules: [
+            path.resolve('./node_modules'),
             path.resolve('./src'),
         ]
     },
