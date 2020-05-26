@@ -63,6 +63,10 @@ const serverConfig = merge(baseConfig, {
         }),
     ],
 
+    externals: { 
+        uws: 'uws' // workaround error in socketio - SEE https://github.com/socketio/engine.io/issues/575#issuecomment-578081012
+     },
+
     output: {
         path: path.resolve(__dirname, 'dist'),
     },
